@@ -1,14 +1,18 @@
 import Vue from 'vue'
 import App from './App.vue'
+import store from './store'
 
 if (module.hot) {
-    module.hot.dispose(function() {
-      // Módulo que está prestes a ser substituído
-    })
-  
-    module.hot.accept(function() {
-      // Módulo ou uma de suas dependências que acabaram de ser atualizados
-    })
-  }
+  module.hot.dispose(function() {
+    // Módulo que está prestes a ser substituído
+  })
 
-new Vue(App).$mount('#app')
+  module.hot.accept(function() {
+    // Módulo ou uma de suas dependências que acabaram de ser atualizados
+  })
+}
+
+new Vue({
+  render: h => h(App),
+  store
+}).$mount('#app')

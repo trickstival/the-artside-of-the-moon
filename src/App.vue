@@ -1,18 +1,16 @@
 <template>
     <div class="root">
-        <pager>
-            <main-page />
-        </pager>
+        <main-page />
     </div>
 </template>
 
 <script>
 import Pager from './components/Pager'
 import pages from './pages/'
-require('aframe')
 
 // console.log(aframeAR)
 export default {
+    name: 'App',
     components: {
         ...pages,
         Pager
