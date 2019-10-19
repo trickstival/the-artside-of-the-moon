@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import moonImg from '../assets/moon2.jpg'
+import moonImg from '../assets/crop.jpg'
 export default {
     moonImg,
     mounted () {
@@ -23,7 +23,7 @@ export default {
         rotate()
 
         // With .setAttribute (less recommended).
-        el.setAttribute('rotation', {x: 15, y: 30, z: 90});
+        el.setAttribute('rotation', {x: 15, y: 30, z: 0});
     }
 };
 </script>
