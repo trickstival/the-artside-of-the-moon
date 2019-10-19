@@ -1,144 +1,138 @@
 <template>
   <div class="moon-3d">
     <a-scene embedded>
-      <a-light intensity=".1" type="ambient" color="#ccc"></a-light>
-        <!-- Camera -->
-        <a-entity :rotation="cameraWrapper.rotation" :position="cameraWrapper.position">
-          <a-camera ref="camera" :position="cameraPos"></a-camera>
-        </a-entity>
-        <!-- Rocket -->
-        <a-sphere radius="1" color="green" :position="`${rocketCam.x} ${rocketCam.y - 4} ${rocketCam.z - 8}`">
-          <a-light type="point" distance="10" color="green"></a-light>
-        </a-sphere>
-        <!-- Sky -->
-        <a-sky color="black"></a-sky>
-        <!-- Moon -->
-        <a-sphere radius="4" ref="moon" :src="$options.moonImg" position="0 1.5 -7">
-        </a-sphere>
-        <a-light type="point" color="white"></a-light>
-        <!-- Sun -->
-        <a-sphere roughness="-5" ref="sun" color="#ffe484" position="-130 1.5 -130">
-        </a-sphere>
-        <!-- Earth -->
-        <a-sphere radius="40" roughness="0" ref="earth" color="blue" position="0 1.5 800">
-        </a-sphere>
+      <a-light intensity=".3" type="ambient" color="#ccc"></a-light>
+      <!-- Camera -->
+      <a-entity :rotation="cameraWrapper.rotation" :position="cameraWrapper.position">
+        <a-camera ref="camera" :position="cameraPos"></a-camera>
+      </a-entity>
+      <!-- Rocket -->
+      <a-sphere
+        radius="1"
+        color="green"
+        :position="`${rocketCam.x} ${rocketCam.y - 4} ${rocketCam.z - 8}`"
+      >
+        <a-light type="point" distance="10" color="green"></a-light>
+      </a-sphere>
+      <!-- Sky -->
+      <a-sky color="black"></a-sky>
+      <!-- Moon -->
+      <a-sphere
+        :rotation="moon.rotation"
+        radius="4"
+        ref="moon"
+        :src="$options.moonImg"
+        position="0 1.5 -7"
+      ></a-sphere>
+      <a-light type="point" color="white"></a-light>
+      <!-- Sun -->
+      <a-sphere roughness="-5" ref="sun" color="#ffe484" position="-130 1.5 -130"></a-sphere>
+      <!-- Earth -->
+      <a-sphere radius="40" roughness="0" ref="earth" color="blue" position="0 1.5 800"></a-sphere>
     </a-scene>
   </div>
 </template>
 
 <script>
-import TWEEN from '@tweenjs/tween.js'
-import moonImg from '../assets/crop.jpg'
-import { mapState } from 'vuex'
+import TWEEN from "@tweenjs/tween.js";
+import moonImg from "../assets/crop.jpg";
+import { mapState } from "vuex";
+import { spinAround, autoRotate } from "../animations/";
+
+const getVector3 = (x = 0, y = 0, z = 0) => ({
+  x,
+  y,
+  z,
+});
 
 export default {
-    name: 'Moon3d',
-    moonImg,
-    data () {
-      return {
-        camera: {
-          x: 0,
-          y: 1.5,
-          z: 500
-        },
-        rocketCam: {
-          x: 40,
-          y: 1.5,
-          z: 790,
-          rot: 0
-        },
-        rocketSpinAroundAnimation: null,
+  name: "Moon3d",
+  moonImg,
+  data() {
+    return {
+      camera: getVector3(0, 1.5, 500),
+      rocketCam: getVector3(40, 1.5, 790),
+      moon: getVector3(),
+      rocketSpinAroundAnimation: null
+    };
+  },
+  computed: {
+    ...mapState(["currentPerspective", "launchToggle"]),
+    cameraPos() {
+      const perspective = this.currentPerspective;
+      this.$refs.camera;
+      if (perspective === "rocket") {
+        const { x, y, z } = this.rocketCam;
+        return `${x} ${y} ${z}`;
+      } else if (perspective === "moon") {
+        return "0 1.5 17";
+      } else if (perspective === "earth") {
+        return "-17 0 -47";
       }
     },
-    computed: {
-      ...mapState(['currentPerspective', 'launchToggle']),
-      cameraPos () {
-        const perspective = this.currentPerspective
-        this.$refs.camera
-        if (perspective === 'rocket') {
-          const { x, y, z } = this.rocketCam
-          return `${x} ${y} ${z}`
-        } else if (perspective === 'moon') {
-          return '0 1.5 17'
-        } else if (perspective === 'earth') {
-          return '-17 0 -47'
-        }
-      },
-      cameraWrapper () {
-        if (this.currentPerspective === 'earth') {
-          return {
-            position: '180 1.5 750',
-            rotation: '0 60 0'
-          }
-        }
+    cameraWrapper() {
+      if (this.currentPerspective === "earth") {
         return {
-          position: '0 0 0',
-          rotation: '0 0 0'
-        }
+          position: "180 1.5 750",
+          rotation: "0 60 0"
+        };
       }
-    },
-    watch: {
-      launchToggle () {
-        this.startRocket()
-      }
-    },
-    methods: {
-      rotateMoon () {
-        const el = this.$refs.moon
-        el.object3D.rotation.y += .002;
-      },
-      startRocket () {
-        this.rocketCam = {
-          x: 40,
-          y: 1.5,
-          z: 790,
-          rot: 0
-        }
-        if (this.rocketSpinAroundAnimation) {
-          this.rocketSpinAroundAnimation.stop()
-        }
-        const radiusStep = 20
-
-        const rocketTween = new TWEEN.Tween(this.rocketCam)
-          .to({ x: 0, y: 1.5, z: radiusStep, }, 20000)
-          .easing(TWEEN.Easing.Quadratic.Out)
-          .onComplete(() => {
-            const midX = 0
-            const rightX = radiusStep
-            const leftX = -radiusStep
-
-            const frontZ = radiusStep
-            const midZ = frontZ - radiusStep
-            const backZ = midZ - radiusStep
-
-            const camStep = 4
-
-            this.rocketSpinAroundAnimation = new TWEEN.Tween(this.rocketCam)
-              .to({
-                x: [rightX, midX, leftX, midX],
-                z: [midZ, backZ, midZ, frontZ],
-              }, 20000)
-              .interpolation(TWEEN.Interpolation.CatmullRom)
-              .repeat(Infinity)
-              .start()
-              .onComplete(() => {
-                this.rocketSpinAroundAnimation = null
-              })
-          })
-          .start()
-      }
-    },
-    mounted () {
-        const animate = (time) => {
-            this.rotateMoon()
-            TWEEN.update(time)
-            requestAnimationFrame(animate)
-        }
-        requestAnimationFrame(animate)
-
-        this.$refs.moon.setAttribute('rotation', {x: 15, y: 30, z: 0});
-        this.$refs.earth.object3D.shininess = 0
+      return {
+        position: "0 0 0",
+        rotation: "0 0 0"
+      };
     }
+  },
+  watch: {
+    launchToggle() {
+      this.startRocket();
+    }
+  },
+  methods: {
+    startRocket() {
+      this.rocketCam = {
+        x: 40,
+        y: 1.5,
+        z: 790,
+      };
+      if (this.rocketSpinAroundAnimation) {
+        this.rocketSpinAroundAnimation.stop();
+      }
+      const radiusStep = 20;
+
+      const rocketTween = new TWEEN.Tween(this.rocketCam)
+        .to({ x: 0, y: 1.5, z: radiusStep }, 20000)
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .onComplete(() => {
+          this.rocketSpinAroundAnimation = spinAround(this.rocketCam, {
+            x: 0,
+            y: 0,
+            z: 0
+          })
+            .start()
+            .onComplete(() => {
+              this.rocketSpinAroundAnimation = null;
+            });
+        })
+        .start();
+    },
+    getRotation (ref) {
+      return this.$refs[ref].object3D.rotation
+    }
+  },
+  mounted() {
+    const animate = time => {
+      TWEEN.update(time);
+      requestAnimationFrame(animate);
+    };
+    requestAnimationFrame(animate);
+
+    autoRotate(this.getRotation('moon')).start()
+    autoRotate(this.getRotation('earth'), 5000000).start()
+
+    this.$refs.moon.setAttribute("rotation", { x: 15, y: 30, z: 0 });
+    this.$refs.earth.object3D.shininess = 0;
+  }
 };
 </script>
 
