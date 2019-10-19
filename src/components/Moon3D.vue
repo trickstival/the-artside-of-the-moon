@@ -7,8 +7,7 @@
         </a-sphere>
         <a-light type="point" color="white"></a-light>
 
-        <a-light position="-100 0 0" intensity="1" type="directional" color="white"></a-light>
-        <a-sphere roughness="-5" ref="sun" color="#ffe484" position="-70 1.5 -70">
+        <a-sphere roughness="-5" ref="sun" color="#ffe484" position="-130 1.5 -130">
         </a-sphere>
     </a-scene>
   </div>
