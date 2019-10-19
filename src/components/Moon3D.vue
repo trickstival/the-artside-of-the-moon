@@ -8,11 +8,14 @@
       </a-entity>
       <!-- Rocket -->
       <a-sphere
+        ref="rocket"
         radius="1"
-        color="green"
+        color="#ccc"
         :position="`${rocketCam.x} ${rocketCam.y - 4} ${rocketCam.z - 8}`"
       >
         <a-light type="point" distance="10" color="green"></a-light>
+        <a-cone rotation="90 90 0"  position="1 0 0" color="#ccc"></a-cone>
+        <a-cone rotation="90 -90 0"  position="-1 0 0" color="#ccc"></a-cone>
       </a-sphere>
       <!-- Sky -->
       <a-sky color="black"></a-sky>
@@ -117,7 +120,7 @@ export default {
       const radiusStep = 20;
 
       const rocketTween = new TWEEN.Tween(this.rocketCam)
-        .to({ x: 0, y: 1.5, z: radiusStep }, 20000)
+        .to({ x: radiusStep, y: 1.5, z: radiusStep }, 2000)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onComplete(() => {
           this.rocketSpinAroundAnimation = spinAround(
@@ -125,17 +128,23 @@ export default {
             this.moon
           )
             .start()
+            .onUpdate(() => [
+              this.getObject('rocket').lookAt(this.getPosition('moon'))
+            ])
             .onComplete(() => {
               this.rocketSpinAroundAnimation = null;
             });
         })
         .start();
     },
+    getObject(ref) {
+      return this.$refs[ref].object3D
+    },
     getRotation(ref) {
-      return this.$refs[ref].object3D.rotation;
+      return this.$refs[ref].object3D.rotation
     },
     getPosition(ref) {
-      return this.$refs[ref].object3D.position;
+      return this.$refs[ref].object3D.position
     }
   },
   mounted() {
@@ -147,8 +156,6 @@ export default {
 
     autoRotate(this.getRotation("moon")).start()
     autoRotate(this.getRotation("earth"), 5000000).start()
-
-    this.$refs.moon.setAttribute("rotation", { x: 15, y: 30, z: 0 });
   }
 };
 </script>
