@@ -1,7 +1,7 @@
 import { Vector3 } from "three"
 import TWEEN from "@tweenjs/tween.js"
 
-export function spinAround (object: Vector3, axis: Vector3, radiusStep = 20) {
+export function spinAround (object: Vector3, axis: Vector3, radiusStep = 20, time = 20000) {
     const midX = axis.x
     const rightX = midX + radiusStep
     const leftX = midX - radiusStep
@@ -13,7 +13,7 @@ export function spinAround (object: Vector3, axis: Vector3, radiusStep = 20) {
         .to({
             x: [rightX, midX, leftX, midX],
             z: [midZ, backZ, midZ, frontZ],
-        }, 20000)
+        }, time)
         .interpolation(TWEEN.Interpolation.CatmullRom)
         .repeat(Infinity)
 }

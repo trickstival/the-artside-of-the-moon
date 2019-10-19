@@ -24,11 +24,25 @@
         :src="$options.moonImg"
         position="0 1.5 -7"
       ></a-sphere>
-      <a-light type="point" color="white"></a-light>
       <!-- Sun -->
-      <a-sphere roughness="-5" ref="sun" color="#ffe484" position="-130 1.5 -130"></a-sphere>
+      <a-sphere
+        radius="5"
+        roughness="-5"
+        ref="sun"
+        color="#ffe484"
+        :position="`${sun.x} ${sun.y} ${sun.z}`"
+      >
+        <a-light type="directional" color="white"></a-light>
+        <a-light type="point" color="white" position="20 0 20" distance="100" intensity="2"></a-light>
+      </a-sphere>
       <!-- Earth -->
-      <a-sphere radius="40" roughness="0" ref="earth" color="blue" position="0 1.5 800"></a-sphere>
+      <a-sphere
+        radius="40"
+        roughness="0"
+        ref="earth"
+        color="blue"
+        :position="`${earth.x} ${earth.y} ${earth.z}`"
+      ></a-sphere>
     </a-scene>
   </div>
 </template>
@@ -42,7 +56,7 @@ import { spinAround, autoRotate } from "../animations/";
 const getVector3 = (x = 0, y = 0, z = 0) => ({
   x,
   y,
-  z,
+  z
 });
 
 export default {
@@ -53,6 +67,8 @@ export default {
       camera: getVector3(0, 1.5, 500),
       rocketCam: getVector3(40, 1.5, 790),
       moon: getVector3(),
+      sun: getVector3(-130, 1.5, -130),
+      earth: getVector3(0, 1.5, 800),
       rocketSpinAroundAnimation: null
     };
   },
@@ -93,7 +109,7 @@ export default {
       this.rocketCam = {
         x: 40,
         y: 1.5,
-        z: 790,
+        z: 790
       };
       if (this.rocketSpinAroundAnimation) {
         this.rocketSpinAroundAnimation.stop();
@@ -104,11 +120,10 @@ export default {
         .to({ x: 0, y: 1.5, z: radiusStep }, 20000)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onComplete(() => {
-          this.rocketSpinAroundAnimation = spinAround(this.rocketCam, {
-            x: 0,
-            y: 0,
-            z: 0
-          })
+          this.rocketSpinAroundAnimation = spinAround(
+            this.rocketCam,
+            this.moon
+          )
             .start()
             .onComplete(() => {
               this.rocketSpinAroundAnimation = null;
@@ -116,8 +131,11 @@ export default {
         })
         .start();
     },
-    getRotation (ref) {
-      return this.$refs[ref].object3D.rotation
+    getRotation(ref) {
+      return this.$refs[ref].object3D.rotation;
+    },
+    getPosition(ref) {
+      return this.$refs[ref].object3D.position;
     }
   },
   mounted() {
@@ -127,11 +145,10 @@ export default {
     };
     requestAnimationFrame(animate);
 
-    autoRotate(this.getRotation('moon')).start()
-    autoRotate(this.getRotation('earth'), 5000000).start()
+    autoRotate(this.getRotation("moon")).start()
+    autoRotate(this.getRotation("earth"), 5000000).start()
 
     this.$refs.moon.setAttribute("rotation", { x: 15, y: 30, z: 0 });
-    this.$refs.earth.object3D.shininess = 0;
   }
 };
 </script>
