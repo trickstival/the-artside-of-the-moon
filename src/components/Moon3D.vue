@@ -120,7 +120,7 @@ export default {
       const radiusStep = 20;
 
       const rocketTween = new TWEEN.Tween(this.rocketCam)
-        .to({ x: radiusStep, y: 1.5, z: radiusStep }, 2000)
+        .to({ x: 0, y: 1.5, z: radiusStep }, 2000)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onComplete(() => {
           this.rocketSpinAroundAnimation = spinAround(
@@ -128,9 +128,10 @@ export default {
             this.moon
           )
             .start()
-            .onUpdate(() => [
-              this.getObject('rocket').lookAt(this.getPosition('moon'))
-            ])
+            .onUpdate(() => {
+              const moonPosition = this.getPosition('moon')
+              this.getObject('rocket').lookAt(moonPosition)
+            })
             .onComplete(() => {
               this.rocketSpinAroundAnimation = null;
             });
