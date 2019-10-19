@@ -26,5 +26,6 @@ export default {
 .main-title {
     font-size: 80px;
     z-index: 20;
+    pointer-events: none;
 }
 </style>
