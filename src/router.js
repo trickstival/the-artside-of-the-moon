@@ -7,7 +7,17 @@ export default new Router({
     routes: [
         {
             path: '/',
-            component: () => import('./pages/MainPage.vue')
+            component: () => import('./pages/MainPage.vue'),
+            children: [
+                {
+                    path: '/',
+                    component: () => import('./pages/PagerPage.vue')
+                },
+                {
+                    path: '/artemis',
+                    component: () => import('./pages/ArtemisPage.vue')
+                }
+            ]
         },
         {
             path: '/vr',
