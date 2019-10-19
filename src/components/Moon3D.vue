@@ -6,8 +6,8 @@
         <a-entity :rotation="cameraWrapper.rotation" :position="cameraWrapper.position">
           <a-camera ref="camera" :position="cameraPos"></a-camera>
         </a-entity>
-        <!-- Ship -->
-        <a-sphere radius="1" color="green" :position="`${rocketCam.x} ${rocketCam.y - 3} ${rocketCam.z - 4}`">
+        <!-- Rocket -->
+        <a-sphere radius="1" color="green" :position="`${rocketCam.x} ${rocketCam.y - 4} ${rocketCam.z - 8}`">
           <a-light type="point" distance="10" color="green"></a-light>
         </a-sphere>
         <!-- Sky -->
@@ -44,8 +44,10 @@ export default {
         rocketCam: {
           x: 40,
           y: 1.5,
-          z: 790
-        }
+          z: 790,
+          rot: 0
+        },
+        rocketSpinAroundAnimation: null,
       }
     },
     computed: {
@@ -57,7 +59,7 @@ export default {
           const { x, y, z } = this.rocketCam
           return `${x} ${y} ${z}`
         } else if (perspective === 'moon') {
-          return '0 1.5 5'
+          return '0 1.5 17'
         } else if (perspective === 'earth') {
           return '-17 0 -47'
         }
@@ -89,11 +91,40 @@ export default {
         this.rocketCam = {
           x: 40,
           y: 1.5,
-          z: 790
+          z: 790,
+          rot: 0
         }
+        if (this.rocketSpinAroundAnimation) {
+          this.rocketSpinAroundAnimation.stop()
+        }
+        const radiusStep = 20
+
         const rocketTween = new TWEEN.Tween(this.rocketCam)
-          .to({ x: 0, y: 1.5, z: 0, }, 20000)
+          .to({ x: 0, y: 1.5, z: radiusStep, }, 2000)
           .easing(TWEEN.Easing.Quadratic.Out)
+          .onComplete(() => {
+            const midX = 0
+            const rightX = radiusStep
+            const leftX = -radiusStep
+
+            const frontZ = radiusStep
+            const midZ = frontZ - radiusStep
+            const backZ = midZ - radiusStep
+
+            const camStep = 4
+
+            this.rocketSpinAroundAnimation = new TWEEN.Tween(this.rocketCam)
+              .to({
+                x: [rightX, midX, leftX, midX],
+                z: [midZ, backZ, midZ, frontZ],
+              }, 20000)
+              .interpolation(TWEEN.Interpolation.CatmullRom)
+              .repeat(Infinity)
+              .start()
+              .onComplete(() => {
+                this.rocketSpinAroundAnimation = null
+              })
+          })
           .start()
       }
     },

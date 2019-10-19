@@ -9,6 +9,7 @@
     "build": "parcel build index.html"
   },
   "devDependencies": {
+    "@types/tween.js": "^17.2.0",
     "@vue/component-compiler-utils": "^3.0.0",
     "parcel-bundler": "^1.12.4",
     "sass": "^1.23.0",

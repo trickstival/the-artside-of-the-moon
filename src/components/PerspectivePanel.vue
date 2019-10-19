@@ -51,6 +51,7 @@ export default {
     margin-top: 10px;
 }
 .perspective-panel {
+    pointer-events: none;
     position: absolute;
     right: 0;
     top: 0;
@@ -69,6 +70,7 @@ export default {
     flex-direction: column;
 }
 .perspective-button {
+    pointer-events: all;
     outline: none;
     margin-top: 10px;
     border-radius: 100%;
