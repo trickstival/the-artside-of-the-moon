@@ -1,9 +1,9 @@
 <template>
   <div class="moon-3d">
-    <a-scene ar>
-        <!-- <a-sky src="https://farm4.staticflickr.com/3281/2575759005_842060e60d_b.jpg"></a-sky> -->
+    <a-scene embedded>
+        <a-sky color="black"></a-sky>
         <a-sphere radius="4" ref="moon" 
-            :src="$options.moonImg" position="-5 0 -6">
+            :src="$options.moonImg" position="0 1.5 -7">
         </a-sphere> 
         <a-box color="yellow" position="0 0 0"></a-box>
     </a-scene>
@@ -17,7 +17,7 @@ export default {
     mounted () {
         const el = this.$refs.moon
         const rotate = () => {
-            el.object3D.rotation.y += .01;
+            el.object3D.rotation.y += .002;
             requestAnimationFrame(rotate)
         }
         rotate()
@@ -35,5 +35,6 @@ export default {
   height: 100%;
   top: 0;
   left: 0;
+  z-index: -1;
 }
 </style>

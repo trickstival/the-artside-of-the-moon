@@ -1,7 +1,7 @@
 <template>
     <div class="main-page">
         <h1 class="main-title">
-            Nasa SpaceApps
+            Welcome to the Moon
         </h1>
         <moon-3d />
     </div>
@@ -18,9 +18,13 @@ export default {
 
 <style lang="scss" scoped>
 .main-page {
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
     font-family: Ubuntu;
 }
 .main-title {
-    z-index: 2;
+    font-size: 80px;
+    z-index: 20;
 }
 </style>
