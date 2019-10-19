@@ -13,7 +13,7 @@
         color="#ccc"
         :position="`${rocketCam.x} ${rocketCam.y - 4} ${rocketCam.z - 8}`"
       >
-        <a-light type="point" distance="10" color="green"></a-light>
+        <a-light type="point" distance="10" color="red"></a-light>
         <a-cone rotation="90 90 0"  position="1 0 0" color="#ccc"></a-cone>
         <a-cone rotation="90 -90 0"  position="-1 0 0" color="#ccc"></a-cone>
       </a-sphere>

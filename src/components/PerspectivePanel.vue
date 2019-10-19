@@ -51,6 +51,7 @@ export default {
     margin-top: 10px;
 }
 .perspective-panel {
+    z-index: 20;
     pointer-events: none;
     position: absolute;
     right: 0;

@@ -1,8 +1,12 @@
 <template>
     <div class="main-page">
         <div class="perspective-panel-wrapper">
-            <!-- <speech /> -->
-            <perspective-panel />
+            <div>
+                <speech />
+            </div>
+            <div>
+                <perspective-panel />
+            </div>
         </div>
         <moon-3d />
     </div>
@@ -18,7 +22,7 @@ export default {
     components: {
         Moon3d,
         PerspectivePanel,
-        // Speech
+        Speech
     }
 }
 </script>
