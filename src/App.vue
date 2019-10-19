@@ -10,8 +10,6 @@
 import Pager from './components/Pager'
 import pages from './pages/'
 require('aframe')
-require('three.ar.js')
-require('aframe-ar')
 
 // console.log(aframeAR)
 export default {
