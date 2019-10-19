@@ -6,7 +6,8 @@ Vue.use(VueX)
 const store = new VueX.Store({
     state: {
         currentPerspective: 'rocket',
-        launchToggle: false
+        launchToggle: false,
+        speechToggle: false
     },
     mutations: {
         setPerspective (state, perspective) {
@@ -14,6 +15,9 @@ const store = new VueX.Store({
         },
         launch(state) {
             state.launchToggle = !state.launchToggle
+        },
+        startSpeech(state) {
+            state.speechToggle = !state.speechToggle
         }
     }
 })

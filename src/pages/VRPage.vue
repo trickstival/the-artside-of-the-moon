@@ -1,9 +1,7 @@
 <template>
     <div class="main-page">
-        <!-- <h1 class="main-title">
-            Welcome to the Moon
-        </h1> -->
         <div class="perspective-panel-wrapper">
+            <!-- <speech /> -->
             <perspective-panel />
         </div>
         <moon-3d />
@@ -13,12 +11,14 @@
 <script>
 import Moon3d from '../components/Moon3D'
 import PerspectivePanel from '../components/PerspectivePanel'
+import Speech from '../components/Speech'
 require('aframe')
 export default {
     name: 'VRPage',
     components: {
         Moon3d,
-        PerspectivePanel
+        PerspectivePanel,
+        // Speech
     }
 }
 </script>

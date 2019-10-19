@@ -120,7 +120,7 @@ export default {
       const radiusStep = 20;
 
       const rocketTween = new TWEEN.Tween(this.rocketCam)
-        .to({ x: 0, y: 1.5, z: radiusStep }, 2000)
+        .to({ x: 0, y: 1.5, z: radiusStep }, 20000)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onComplete(() => {
           this.rocketSpinAroundAnimation = spinAround(
