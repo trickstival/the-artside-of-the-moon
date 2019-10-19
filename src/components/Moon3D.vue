@@ -2,10 +2,14 @@
   <div class="moon-3d">
     <a-scene embedded>
         <a-sky color="black"></a-sky>
-        <a-sphere radius="4" ref="moon" 
-            :src="$options.moonImg" position="0 1.5 -7">
-        </a-sphere> 
-        <a-box color="yellow" position="0 0 0"></a-box>
+        <a-light type="point" color="white" intensity="0.1" position="-100 0 0"></a-light>
+        <a-sphere radius="4" ref="moon" :src="$options.moonImg" position="0 1.5 -7">
+        </a-sphere>
+        <a-light type="point" color="white"></a-light>
+
+        <a-light position="-100 0 0" intensity="1" type="directional" color="white"></a-light>
+        <a-sphere roughness="-5" ref="sun" color="#ffe484" position="-70 1.5 -70">
+        </a-sphere>
     </a-scene>
   </div>
 </template>
