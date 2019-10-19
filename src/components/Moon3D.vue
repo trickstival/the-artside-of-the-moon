@@ -2,7 +2,8 @@
   <div class="moon-3d">
     <a-scene>
         <a-sky src="https://farm4.staticflickr.com/3281/2575759005_842060e60d_b.jpg"></a-sky>
-        <a-sphere color="green" radius="2" position="-5 0 -6">
+        <a-sphere radius="4" ref="moon" 
+            :src="$options.moonImg" position="-5 0 -6">
         </a-sphere> 
         <a-box color="yellow" position="0 0 0"></a-box>
     </a-scene>
@@ -10,7 +11,21 @@
 </template>
 
 <script>
-export default {};
+import moonImg from '../assets/moon2.jpg'
+export default {
+    moonImg,
+    mounted () {
+        const el = this.$refs.moon
+        const rotate = () => {
+            el.object3D.rotation.y += .01;
+            requestAnimationFrame(rotate)
+        }
+        rotate()
+
+        // With .setAttribute (less recommended).
+        el.setAttribute('rotation', {x: 15, y: 30, z: 90});
+    }
+};
 </script>
 
 <style lang="scss" scoped>
