@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
+import router from './router'
 
 if (module.hot) {
   module.hot.dispose(function() {
@@ -14,5 +15,6 @@ if (module.hot) {
 
 new Vue({
   render: h => h(App),
-  store
+  store,
+  router
 }).$mount('#app')

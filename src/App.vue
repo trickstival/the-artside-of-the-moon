@@ -1,20 +1,12 @@
 <template>
     <div class="root">
-        <main-page />
+        <router-view />
     </div>
 </template>
 
 <script>
-import Pager from './components/Pager'
-import pages from './pages/'
-
-// console.log(aframeAR)
 export default {
     name: 'App',
-    components: {
-        ...pages,
-        Pager
-    },
     created () {
         
     }
