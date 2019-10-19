@@ -9,13 +9,18 @@
 <script>
 import Pager from './components/Pager'
 import pages from './pages/'
-const aframe = require('aframe')
-console.log(aframe)
+require('aframe')
+require('three.ar.js')
 require('aframe-ar')
+
+// console.log(aframeAR)
 export default {
     components: {
         ...pages,
         Pager
+    },
+    created () {
+        
     }
 }
 </script>

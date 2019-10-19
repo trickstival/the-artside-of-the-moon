@@ -5743,6 +5743,18 @@ three-buffer-vertex-data@^1.0.0:
   dependencies:
     flatten-vertex-data "^1.0.0"
 
+three.ar.js@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/three.ar.js/-/three.ar.js-0.1.8.tgz#5c10801ed4f4d2dc43d9b2986cd774f0bfcdbefd"
+  integrity sha512-NcFz7NKF5ikK/1anuvIBoj40m+xf5gENOlnvUv0ieA6HwQ1PWX9iXIsRqzcT/uwyuqSw488eYpeEtis3dC7Dpw==
+  dependencies:
+    gl-preserve-state "^1.0.0"
+
+three@^0.109.0:
+  version "0.109.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.109.0.tgz#611c9ef860d10bd107695cead6c6abcd2422e5fd"
+  integrity sha512-XT99T3Hvgh2CEvwPdHYEunNE+clLK6KiT1U8En7YOgIqTUw4MrLeIc8zxQAJ6wbP8hhJaY5+Cff3jwBPpBa0gA==
+
 through2@0.6.x:
   version "0.6.5"
   resolved "https://registry.yarnpkg.com/through2/-/through2-0.6.5.tgz#41ab9c67b29d57209071410e1d7a7a968cd3ad48"
