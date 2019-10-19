@@ -9,7 +9,9 @@
 <script>
 import Pager from './components/Pager'
 import pages from './pages/'
-require('aframe')
+const aframe = require('aframe')
+console.log(aframe)
+require('aframe-ar')
 export default {
     components: {
         ...pages,

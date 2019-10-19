@@ -1,7 +1,7 @@
 <template>
   <div class="moon-3d">
-    <a-scene>
-        <a-sky src="https://farm4.staticflickr.com/3281/2575759005_842060e60d_b.jpg"></a-sky>
+    <a-scene ar>
+        <!-- <a-sky src="https://farm4.staticflickr.com/3281/2575759005_842060e60d_b.jpg"></a-sky> -->
         <a-sphere radius="4" ref="moon" 
             :src="$options.moonImg" position="-5 0 -6">
         </a-sphere> 
