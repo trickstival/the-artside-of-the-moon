@@ -79,10 +79,11 @@ export default {
         },
         playAudio () {
             const audioElement = this.$refs.voice
+            const ctx = this.ctx = new AudioContext()
             const musicElement = this.$refs.music
             musicElement.volume = .3
             if (this.ctx.state === 'suspended') {
-                audioElement.resume()
+                this.ctx.resume()
                 // musicElement.resume()
                 return
             }
@@ -113,10 +114,6 @@ export default {
         ...mapState(['currentPerspective', 'isPlayingAudio', 'launchToggle'])
     },
     mounted () {
-        const audioElement = this.$refs.voice
-        const ctx = this.ctx = new AudioContext()
-        const track = ctx.createMediaElementSource(audioElement)
-        track.connect(ctx.destination)
         window.addEventListener('keydown', this.keydownCb)
     },
     beforeDestroy() {
