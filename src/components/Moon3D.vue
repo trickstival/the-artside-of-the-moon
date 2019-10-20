@@ -7,16 +7,18 @@
         <a-camera ref="camera" :position="cameraPos"></a-camera>
       </a-entity>
       <!-- Rocket -->
-      <a-sphere
+      <a-cylinder
+        :src="$options.foguete"
         ref="rocket"
         radius="1"
-        color="#036558"
+        height="6"
+        rotation="270 180 0"
         :position="`${rocketCam.x} ${rocketCam.y - 4} ${rocketCam.z - 8}`"
       >
         <a-light type="point" distance="10" color="red"></a-light>
-        <a-cone rotation="90 90 0" position="1 0 0" color="#2fa590"></a-cone>
-        <a-cone rotation="90 -90 0" position="-1 0 0" color="#2fa590"></a-cone>
-      </a-sphere>
+        <a-cone :src="$options.foguete" rotation="90 90 0"  position="1.3 2.3 0"></a-cone>
+        <a-cone :src="$options.foguete" rotation="90 -90 0" position="-1.3 2.3 0"></a-cone>
+      </a-cylinder>
       <!-- Sky -->
       <a-sky :src="sky.currentSky" repeat="10 10"></a-sky>
       <!-- Moon -->
@@ -80,6 +82,7 @@ import earthImg from '../assets/earth_cartoon_1.svg'
 import skyImg from "../assets/sky.svg";
 import sky2Img from "../assets/sky2.svg";
 import sky3Img from "../assets/sky3.svg";
+import foguete from '../assets/foguete_1.svg'
 import { mapState } from "vuex";
 import { spinAround, autoRotate } from "../animations/";
 
@@ -93,6 +96,7 @@ export default {
   name: "Moon3d",
   moonImg,
   earthImg,
+  foguete,
   data() {
     return {
       camera: getVector3(0, 1.5, 500),
@@ -147,9 +151,7 @@ export default {
   methods: {
     startRocket() {
       const rocket = this.getObject("rocket");
-      rocket.rotation.y = 0;
-      rocket.rotation.x = 0;
-      rocket.rotation.z = 0;
+      rocket.rotation.set(...[270, 180, 0].map(THREE.Math.degToRad))
       this.rocketCam = {
         x: 40,
         y: 1.5,
@@ -162,13 +164,17 @@ export default {
 
       const rocketTween = new TWEEN.Tween(this.rocketCam)
         .to({ x: 0, y: 1.5, z: radiusStep }, 60000)
+        // .to({ x: 0, y: 1.5, z: radiusStep }, 1000)
         .easing(TWEEN.Easing.Quadratic.Out)
         .onComplete(() => {
           this.rocketSpinAroundAnimation = spinAround(this.rocketCam, this.moon)
             .start()
-            .onUpdate(() => {
+            .onUpdate(({ x, y, z }) => {
               const moonPosition = this.getPosition("moon");
-              this.getObject("rocket").lookAt(moonPosition);
+              const testMesh = rocket.clone()
+              testMesh.lookAt(moonPosition)
+              testMesh.rotation.z -= 1.5
+              rocket.rotation.copy(testMesh.rotation);
             });
         })
         .start();
