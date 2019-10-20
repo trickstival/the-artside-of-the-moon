@@ -22,15 +22,18 @@ export default {
 * {
     box-sizing: border-box;
 }
-body {
-    margin: 0;
+body#spec[style], html {
+    margin: 0!important;
+    width: 100vw!important;
+    height: 100vh!important;
+    overflow: hidden;
 }
 </style>
 
 <style lang="scss" scoped>
 .root {
     color: #fff;
-    position: absolute;
+    position: fixed;
     height: 100vh;
     width: 100vw;
 }

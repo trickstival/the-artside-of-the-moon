@@ -1,11 +1,12 @@
 <template>
   <div class="moon-3d">
-    <a-scene arjs='sourceType: webcam;' ref="scene" embedded>
+    <a-scene embedded vr-mode-ui='enabled: false' arjs="trackingMethod: best; patternRatio: 0.75; 
+     debugUIEnabled: false;" renderer='logarithmicDepthBuffer: true;' ref="scene">
       <a-light intensity=".3" type="ambient" color="#ccc"></a-light>
       <!-- Camera -->
       <a-entity :rotation="cameraWrapper.rotation" :position="cameraWrapper.position">
-        <ar-camera ref="camera" preset='hiro'></ar-camera>
-        <!-- <a-camera ref="camera" :position="cameraPos"></a-camera> -->
+        <!-- <ar-camera ref="camera" :position="cameraPos" preset='best'></ar-camera> -->
+        <a-camera ref="camera" :position="cameraPos"></a-camera>
       </a-entity>
       <!-- Rocket -->
       <a-cylinder
