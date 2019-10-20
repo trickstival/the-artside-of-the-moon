@@ -10,12 +10,12 @@
       <a-sphere
         ref="rocket"
         radius="1"
-        color="#ccc"
+        color="#036558"
         :position="`${rocketCam.x} ${rocketCam.y - 4} ${rocketCam.z - 8}`"
       >
         <a-light type="point" distance="10" color="red"></a-light>
-        <a-cone rotation="90 90 0"  position="1 0 0" color="#ccc"></a-cone>
-        <a-cone rotation="90 -90 0"  position="-1 0 0" color="#ccc"></a-cone>
+        <a-cone rotation="90 90 0"  position="1 0 0" color="#2fa590"></a-cone>
+        <a-cone rotation="90 -90 0"  position="-1 0 0" color="#2fa590"></a-cone>
       </a-sphere>
       <!-- Sky -->
       <a-sky color="black"></a-sky>

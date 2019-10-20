@@ -1,6 +1,9 @@
 <template>
     <section class="perspective-panel">
         <div class="button-list">
+            <audio ref="voice">
+                <source :src="$options.voicePath" type="audio/wav">
+            </audio>
             <button
                 v-for="state in possibleStates"
                 :key="state.label"
@@ -12,7 +15,7 @@
             </button>
         </div>
         <div class="launcher">
-            <button @click="$store.commit('launch')" class="perspective-button">
+            <button @click="launch" class="perspective-button">
                 Go!
             </button>
         </div>
@@ -21,7 +24,10 @@
 
 <script>
 import { mapState } from 'vuex'
+import voicePath from '../assets/voice.wav'
+
 export default {
+    voicePath,
     data () {
         return {
             possibleStates: [
@@ -37,11 +43,54 @@ export default {
                     label: '3',
                     perspective: 'earth'
                 }
-            ]
+            ],
+            audioCtx: null,
+            keydownCb: (evt) => {
+                console.log('teste', evt.keyCode)
+                if (evt.keyCode === 32) {
+                    this.$store.commit('toggleAudioPlay')
+                }
+            }
+        }
+    },
+    methods: {
+        launch () {
+            this.$store.commit('launch')
+        },
+        playAudio () {
+            const audioElement = this.$refs.voice
+            if (this.ctx.state === 'suspended') {
+                audioElement.resume()
+                return
+            }
+            audioElement.play()
+        },
+        pauseAudio () {
+            const audioElement = this.$refs.voice
+            audioElement.pause()
+        }
+    },
+    watch: {
+        isPlayingAudio (val) {
+            if (val) {
+                this.playAudio()
+            } else {
+                this.pauseAudio()
+            }
         }
     },
     computed: {
-        ...mapState(['currentPerspective'])
+        ...mapState(['currentPerspective', 'isPlayingAudio'])
+    },
+    mounted () {
+        const audioElement = this.$refs.voice
+        const ctx = this.ctx = new AudioContext()
+        const track = ctx.createMediaElementSource(audioElement)
+        track.connect(ctx.destination)
+        window.addEventListener('keydown', this.keydownCb)
+    },
+    beforeDestroy() {
+        window.removeEventListener('keydown', this.keydownCb)
     }
 }
 </script>

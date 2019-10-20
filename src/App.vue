@@ -1,5 +1,5 @@
 <template>
-    <div class="root">
+    <div @keydown="test" class="root">
         <router-view />
     </div>
 </template>
@@ -7,6 +7,11 @@
 <script>
 export default {
     name: 'App',
+    methods: {
+        test () {
+            console.log('teste')
+        }
+    },
     created () {
         
     }
