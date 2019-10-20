@@ -28,6 +28,12 @@ import { mapState } from 'vuex'
 import voicePath from '../assets/voice.wav'
 import voiceOggPath from '../assets/voice.ogg'
 
+function goFullScreen() {
+  if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+  }
+}
+
 export default {
     voicePath,
     voiceOggPath,
@@ -58,6 +64,7 @@ export default {
     },
     methods: {
         launch () {
+            goFullScreen()
             this.hasStarted = true
             this.$store.commit('launch')
         },
