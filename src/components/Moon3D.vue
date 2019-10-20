@@ -21,9 +21,9 @@
           radius=".99"
           position="0 3 0"
         >
-
         </a-cylinder>
         <a-light type="point" distance="10" color="red"></a-light>
+        <a-cone color="red" height="2.5" radius-bottom="1.2" rotation="180 0 0" position="0 -4 0"></a-cone>
         <a-cone :src="$options.foguete" rotation="90 90 0"  position="1.3 2.3 0"></a-cone>
         <a-cone :src="$options.foguete" rotation="90 -90 0" position="-1.3 2.3 0"></a-cone>
       </a-cylinder>
