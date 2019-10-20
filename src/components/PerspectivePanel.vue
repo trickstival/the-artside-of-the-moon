@@ -3,6 +3,7 @@
         <div class="button-list">
             <audio ref="voice">
                 <source :src="$options.voicePath" type="audio/wav">
+                <source :src="$options.voiceOggPath" type="audio/ogg">
             </audio>
             <button
                 v-for="state in possibleStates"
@@ -25,9 +26,11 @@
 <script>
 import { mapState } from 'vuex'
 import voicePath from '../assets/voice.wav'
+import voiceOggPath from '../assets/voice.ogg'
 
 export default {
     voicePath,
+    voiceOggPath,
     data () {
         return {
             hasStarted: false,
