@@ -11,6 +11,7 @@
         :src="$options.foguete"
         ref="rocket"
         radius="1"
+        particle-system="color: #000,#FFF;accelerationSpread:5 0 5;direction:-1;maxAge:1;"
         height="6"
         rotation="270 180 0"
         :position="`${rocketCam.x} ${rocketCam.y - 4} ${rocketCam.z - 8}`"
@@ -23,6 +24,7 @@
       <a-sky :src="sky.currentSky" repeat="10 10"></a-sky>
       <!-- Moon -->
       <a-sphere
+        particle-system="preset: dust;"
         :rotation="moon.rotation"
         radius="4"
         ref="moon"

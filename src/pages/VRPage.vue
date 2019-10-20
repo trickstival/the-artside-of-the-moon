@@ -17,6 +17,7 @@ import Moon3d from '../components/Moon3D'
 import PerspectivePanel from '../components/PerspectivePanel'
 import Speech from '../components/Speech'
 require('aframe')
+require('aframe-particle-system-component')
 export default {
     name: 'VRPage',
     components: {
