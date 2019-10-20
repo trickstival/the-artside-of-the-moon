@@ -4,6 +4,7 @@
             <audio ref="voice">
                 <source :src="$options.voicePath" type="audio/wav">
                 <source :src="$options.voiceOggPath" type="audio/ogg">
+                <source :src="$options.voiceMp3Path" type="audio/mp3">
             </audio>
             <audio volume="0.2" ref="music">
                 <source :src="$options.ticks">
@@ -30,6 +31,8 @@
 import { mapState } from 'vuex'
 import voicePath from '../assets/voice.wav'
 import voiceOggPath from '../assets/voice.ogg'
+import voiceMp3Path from '../assets/voice.ogg'
+
 import ticks from '../assets/ticks.mp3'
 
 function goFullScreen() {
@@ -41,6 +44,7 @@ function goFullScreen() {
 export default {
     voicePath,
     voiceOggPath,
+    voiceMp3Path,
     ticks,
     data () {
         return {
