@@ -46,7 +46,6 @@ export default {
             ],
             audioCtx: null,
             keydownCb: (evt) => {
-                console.log('teste', evt.keyCode)
                 if (evt.keyCode === 32) {
                     this.$store.commit('toggleAudioPlay')
                 }
@@ -77,10 +76,15 @@ export default {
             } else {
                 this.pauseAudio()
             }
+        },
+        launchToggle () {
+            this.pauseAudio()
+            this.$refs.voice.currentTime = 0
+            this.playAudio()
         }
     },
     computed: {
-        ...mapState(['currentPerspective', 'isPlayingAudio'])
+        ...mapState(['currentPerspective', 'isPlayingAudio', 'launchToggle'])
     },
     mounted () {
         const audioElement = this.$refs.voice

@@ -109,6 +109,10 @@ export default {
   },
   methods: {
     startRocket() {
+      const rocket = this.getObject('rocket')
+      rocket.rotation.y = 0
+      rocket.rotation.x = 0
+      rocket.rotation.z = 0
       this.rocketCam = {
         x: 40,
         y: 1.5,
@@ -132,9 +136,6 @@ export default {
               const moonPosition = this.getPosition('moon')
               this.getObject('rocket').lookAt(moonPosition)
             })
-            .onComplete(() => {
-              this.rocketSpinAroundAnimation = null;
-            });
         })
         .start();
     },

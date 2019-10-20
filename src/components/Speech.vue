@@ -25,7 +25,7 @@ export default {
             speechs: [
                 {
                     text: '',
-                    duration: 18000
+                    duration: 35000
                 },
                 {
                     text: 'Al, It‘s been a long way, but we‘re here.',
@@ -53,16 +53,21 @@ export default {
                     author: 'Jim Bridenstine'
                 },
             ],
-            cancelRunning: false
+            cancelRunning: false,
+            currentExecution: Symbol('exec')
         }
     },
     watch: {
         '$store.state.launchToggle' () {
-            this.start()
+            this.currentExecution = Symbol('exec')
+            this.start(this.speechs.slice(), this.currentExecution)
         }
     },
     methods: {
-        start (speechs = this.speechs.slice()) {
+        start (speechs = this.speechs.slice(), execution) {
+            if (execution !== this.currentExecution) {
+                return
+            }
             const speech = speechs.shift()
             this.currentSpeech = speech || ''
             if (!speech) {
@@ -73,8 +78,8 @@ export default {
                     this.currentSpeech = ''
                     return this.$nextTick()
                 })
-                .then(() => wait(speech.duration))
-                .then(() => this.start(speechs))
+                .then(() => wait(3000))
+                .then(() => this.start(speechs, execution))
         }
     }
 }
