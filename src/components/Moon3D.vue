@@ -61,7 +61,14 @@
         ref="earth"
         :src="$options.earthImg"
         :position="`${earth.x} ${earth.y} ${earth.z}`"
-      ></a-sphere>
+      >
+        <!-- Halo -->
+        <a-sphere
+          ref="earthHalo"
+          :radius="halos.earthHaloRadius"
+          material="emissive:#ccc;transparent: true; opacity: 0.04"
+        >
+      </a-sphere>
     </a-scene>
   </div>
 </template>
@@ -96,7 +103,9 @@ export default {
       rocketSpinAroundAnimation: null,
       halos: {
         moonHaloRadius: 8,
-        sunHaloRadius: 9
+        sunHaloRadius: 9,
+        earthHaloRadius: 50,
+        earthHalo2Radius: 80,
       },
       sky: {
         currentSky: skyImg
@@ -166,7 +175,7 @@ export default {
     },
     pulseHalos () {
       new TWEEN.Tween(this.halos)
-        .to({ moonHaloRadius: 9, sunHaloRadius: 7 }, 6000)
+        .to({ moonHaloRadius: 9, sunHaloRadius: 7, earthHaloRadius: 55, earthHalo2Radius: 95 }, 6000)
         .repeat(Infinity)
         .yoyo(true)
         .easing(TWEEN.Easing.Quadratic.In)
