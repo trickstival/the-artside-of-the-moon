@@ -4,8 +4,8 @@
       <a-light intensity=".3" type="ambient" color="#ccc"></a-light>
       <!-- Camera -->
       <a-entity :rotation="cameraWrapper.rotation" :position="cameraWrapper.position">
-        <a-marker-camera preset='hiro'></a-marker-camera>
-        <a-camera ref="camera" :position="cameraPos"></a-camera>
+        <ar-camera ref="camera" preset='hiro'></ar-camera>
+        <!-- <a-camera ref="camera" :position="cameraPos"></a-camera> -->
       </a-entity>
       <!-- Rocket -->
       <a-cylinder
