@@ -11,7 +11,7 @@
         :src="$options.foguete"
         ref="rocket"
         radius="1"
-        particle-system="color: #000,#FFF;direction:-1;maxAge:1;"
+        :particle-system="hasStarted ? 'color: #000,#FFF;direction:-1;maxAge:1;' : null"
         height="6"
         rotation="270 180 0"
         :position="`${rocketCam.x} ${rocketCam.y - 4} ${rocketCam.z - 8}`"
@@ -122,7 +122,8 @@ export default {
       },
       sky: {
         currentSky: skyImg
-      }
+      },
+      hasStarted: false
     };
   },
   computed: {
@@ -159,6 +160,7 @@ export default {
   },
   methods: {
     startRocket() {
+      this.hasStarted = true
       const rocket = this.getObject("rocket");
       rocket.rotation.set(...[270, 180, 0].map(THREE.Math.degToRad))
       this.rocketCam = {

@@ -15,7 +15,7 @@
             </button>
         </div>
         <div class="launcher">
-            <button @click="launch" class="perspective-button">
+            <button v-if="!hasStarted" @click="launch" class="perspective-button">
                 Go!
             </button>
         </div>
@@ -30,6 +30,7 @@ export default {
     voicePath,
     data () {
         return {
+            hasStarted: false,
             possibleStates: [
                 {
                     label: '1',
@@ -54,6 +55,7 @@ export default {
     },
     methods: {
         launch () {
+            this.hasStarted = true
             this.$store.commit('launch')
         },
         playAudio () {
