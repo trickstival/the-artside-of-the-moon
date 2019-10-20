@@ -1,9 +1,10 @@
 <template>
   <div class="moon-3d">
-    <a-scene ref="scene" embedded>
+    <a-scene arjs='sourceType: webcam;' ref="scene" embedded>
       <a-light intensity=".3" type="ambient" color="#ccc"></a-light>
       <!-- Camera -->
       <a-entity :rotation="cameraWrapper.rotation" :position="cameraWrapper.position">
+        <a-marker-camera preset='hiro'></a-marker-camera>
         <a-camera ref="camera" :position="cameraPos"></a-camera>
       </a-entity>
       <!-- Rocket -->
@@ -28,7 +29,7 @@
         <a-cone :src="$options.foguete" rotation="90 -90 0" position="-1.3 2.3 0"></a-cone>
       </a-cylinder>
       <!-- Sky -->
-      <a-sky :src="sky.currentSky" repeat="10 10"></a-sky>
+      <!-- <a-sky :src="sky.currentSky" repeat="10 10"></a-sky> -->
       <!-- Moon -->
       <a-sphere
         particle-system="preset: dust;"

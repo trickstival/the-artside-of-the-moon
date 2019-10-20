@@ -18,6 +18,7 @@ import PerspectivePanel from '../components/PerspectivePanel'
 import Speech from '../components/Speech'
 require('aframe')
 require('aframe-particle-system-component')
+require('aframe-ar')
 export default {
     name: 'VRPage',
     components: {
