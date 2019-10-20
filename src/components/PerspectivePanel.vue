@@ -5,6 +5,9 @@
                 <source :src="$options.voicePath" type="audio/wav">
                 <source :src="$options.voiceOggPath" type="audio/ogg">
             </audio>
+            <audio volume="0.2" ref="music">
+                <source :src="$options.ticks">
+            </audio>
             <button
                 v-for="state in possibleStates"
                 :key="state.label"
@@ -27,6 +30,7 @@
 import { mapState } from 'vuex'
 import voicePath from '../assets/voice.wav'
 import voiceOggPath from '../assets/voice.ogg'
+import ticks from '../assets/ticks.mp3'
 
 function goFullScreen() {
   if (!document.fullscreenElement) {
@@ -37,6 +41,7 @@ function goFullScreen() {
 export default {
     voicePath,
     voiceOggPath,
+    ticks,
     data () {
         return {
             hasStarted: false,
@@ -70,15 +75,20 @@ export default {
         },
         playAudio () {
             const audioElement = this.$refs.voice
+            const musicElement = this.$refs.music
+            musicElement.volume = .3
             if (this.ctx.state === 'suspended') {
                 audioElement.resume()
+                // musicElement.resume()
                 return
             }
             audioElement.play()
+            musicElement.play()
         },
         pauseAudio () {
             const audioElement = this.$refs.voice
             audioElement.pause()
+            // musicElement.pause()
         }
     },
     watch: {
